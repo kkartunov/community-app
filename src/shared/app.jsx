@@ -11,7 +11,8 @@ import Routes from 'routes';
 import ErrorMessage from 'containers/ErrorMessage';
 import ErrorIcons from 'containers/ErrorIcons';
 
-import { DevTools, isomorphy, config } from 'topcoder-react-utils';
+//import { DevTools, isomorphy, config } from 'topcoder-react-utils';
+import { config } from 'topcoder-react-utils';
 
 import ExtendedReduxToastr from 'containers/toastr';
 
@@ -49,7 +50,7 @@ export default function App() {
         transitionOut="fadeOut"
         progressBar={false}
       />
-      { isomorphy.isDevBuild() ? <DevTools /> : undefined }
+      {/* { isomorphy.isDevBuild() ? <DevTools /> : undefined } */}
     </div>
   );
 }
