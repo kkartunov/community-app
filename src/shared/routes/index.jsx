@@ -57,7 +57,15 @@ function Routes({ communityId }) {
     <div>
       {metaTags}
       <Switch>
-        <Route exact path="/" component={Content} />
+        <Route
+          render={() => (
+            <ContentfulRoute
+              baseUrl="/"
+              id="4Ie8cLj2OvuFqbU46HBGQM"
+            />
+          )}
+          path="/"
+        />
         {Examples()}
         <Route
           render={({ match }) => (
@@ -126,15 +134,6 @@ function Routes({ communityId }) {
           )}
           exact
           path={config.START_PAGE_PATH}
-        />
-        <Route
-          render={() => (
-            <ContentfulRoute
-              baseUrl="/wipro-apollo"
-              id="4Ie8cLj2OvuFqbU46HBGQM"
-            />
-          )}
-          path="/wipro-apollo"
         />
         <Topcoder />
       </Switch>
