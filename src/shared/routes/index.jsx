@@ -7,6 +7,7 @@ import ContentfulRoute from 'components/Contentful/Route';
 import Content from 'components/Content';
 import Footer from 'components/TopcoderFooter';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import {
   Switch, Route, withRouter, Redirect,
@@ -66,77 +67,10 @@ function Routes({ communityId }) {
           )}
           path="/"
         />
-        {Examples()}
-        <Route
-          render={({ match }) => (
-            <CommunityLoader
-              communityComponent={({ member, meta }) => {
-                let base = match.url;
-                while (base.endsWith('/')) base = base.slice(0, -1);
-                return (
-                  <Communities
-                    base={base}
-                    communityId={match.params.communityId}
-                    member={member}
-                    meta={meta}
-                  />
-                );
-              }}
-              communityId={match.params.communityId}
-            />
-          )}
-          path="/__community__/:communityId"
-        />
-        <Route
-          component={() => <Sandbox base="/sandbox" />}
-          path="/sandbox"
-        />
-        {/* <Route
-          component={() => <TrackHomePages base="/track" />}
-          path="/track"
-        /> */}
-        <Redirect
-          from="/community/data-science/data-science-tutorials/*"
-          to="/community/competitive-programming/tutorials/*"
-        />
-        <Route
-          component={() => <TrackHomePages base="/community" />}
-          path="/community/(competitive-programming|data-science|design|development|qa)/how-to-compete"
-        />
-        <Redirect
-          from="/community/gigs"
-          to="/gigs"
-        />
-        <Route
-          component={PolicyPages}
-          exact
-          path={`${config.POLICY_PAGES_PATH}/:slug?`}
-        />
-        <Route
-          component={GigsPages}
-          exact
-          path={`${config.GIGS_PAGES_PATH}/:id?`}
-        />
-        <Route
-          component={GigsPages}
-          exact
-          path={`${config.GIGS_PAGES_PATH}/:id/apply`}
-        />
-        <Route
-          render={() => (
-            <React.Fragment>
-              <ContentfulRoute
-                baseUrl={config.START_PAGE_PATH}
-                id="vpcfRkUPoTtxXoEIBvCRl"
-              />
-              <Footer />
-            </React.Fragment>
-          )}
-          exact
-          path={config.START_PAGE_PATH}
-        />
-        <Topcoder />
       </Switch>
+      <Helmet>
+        <link rel="icon" type="image/png" href="https://www.wipro.com/content/dam/nexus/en/favicon.png#v2" />
+      </Helmet>
     </div>
   );
 }
