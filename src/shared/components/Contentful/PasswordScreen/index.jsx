@@ -14,7 +14,7 @@ export default class PasswordScreen extends React.Component {
     super(props);
     this.state = {};
 
-    if (window) {
+    if (typeof window === 'object') {
       let ra = sessionStorage.getItem('_ra');
       if (ra) {
         ra = JSON.parse(ra);
