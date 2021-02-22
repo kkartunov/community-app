@@ -10,10 +10,19 @@ import TextInput from 'components/GUIKit/TextInput';
 import './style.scss';
 
 export default class PasswordScreen extends React.Component {
-  state = {};
-
   constructor(props) {
     super(props);
+    this.state = {};
+
+    if (window) {
+      let ra = sessionStorage.getItem('_ra');
+      if (ra) {
+        ra = JSON.parse(ra);
+        if (ra[window.location.href]) {
+          this.state.authorized = true;
+        }
+      }
+    }
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onPasswordInput = this.onPasswordInput.bind(this);
@@ -23,6 +32,14 @@ export default class PasswordScreen extends React.Component {
     const { password } = this.props;
     this.setState((state) => {
       const { inputVal } = state;
+      if (password === inputVal) {
+        let ra = sessionStorage.getItem('_ra');
+        if (ra) ra = JSON.parse(ra);
+        sessionStorage.setItem('_ra', JSON.stringify({
+          ...ra || {},
+          [window.location.href]: true,
+        }));
+      }
       return {
         authorized: password === inputVal,
         errorMsg: password === inputVal ? '' : 'Password incorrect',
