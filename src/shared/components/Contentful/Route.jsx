@@ -25,6 +25,7 @@ function ChildRoutesLoader(props) {
     spaceName,
     environment,
     url,
+    parentPassword,
   } = props;
 
   const ids = _.map(fields.childRoutes, 'sys.id');
@@ -54,27 +55,28 @@ function ChildRoutesLoader(props) {
                 {
                   // eslint-disable-next-line no-nested-ternary
                   fields.viewport
-                    ? (!fields.password ? (
-                      <Viewport
-                        id={fields.viewport.sys.id}
-                        preview={preview}
-                        spaceName={spaceName}
-                        environment={environment}
-                        baseUrl={url}
-                      />
-                    ) : (
-                      <PasswordScreen
-                        password={fields.password}
-                        viewPortId={fields.viewport.sys.id}
-                        preview={preview}
-                        spaceName={spaceName}
-                        environment={environment}
-                        baseUrl={url}
-                        title={fields.passwordScreenTitle}
-                        btnText={fields.passwordScreenButtonText}
-                        content={fields.passwordScreenContent}
-                      />
-                    )
+                    ? (!fields.password
+                      && (!parentPassword || fields.independentFromParentPasswords) ? (
+                        <Viewport
+                          id={fields.viewport.sys.id}
+                          preview={preview}
+                          spaceName={spaceName}
+                          environment={environment}
+                          baseUrl={url}
+                        />
+                      ) : (
+                        <PasswordScreen
+                          password={fields.password || parentPassword}
+                          viewPortId={fields.viewport.sys.id}
+                          preview={preview}
+                          spaceName={spaceName}
+                          environment={environment}
+                          baseUrl={url}
+                          title={fields.passwordScreenTitle}
+                          btnText={fields.passwordScreenButtonText}
+                          content={fields.passwordScreenContent}
+                        />
+                      )
                     ) : <Error404 />
                 }
               </React.Fragment>
@@ -91,6 +93,7 @@ function ChildRoutesLoader(props) {
                 preview={preview}
                 spaceName={spaceName}
                 environment={environment}
+                parentPassword={fields.password || parentPassword}
               />
             )))
           }
@@ -106,6 +109,7 @@ ChildRoutesLoader.defaultProps = {
   error404: null,
   spaceName: null,
   environment: null,
+  parentPassword: null,
 };
 
 ChildRoutesLoader.propTypes = {
@@ -115,6 +119,7 @@ ChildRoutesLoader.propTypes = {
   spaceName: PT.string,
   environment: PT.string,
   url: PT.string.isRequired,
+  parentPassword: PT.string,
 };
 
 export default function ContentfulRoute(props) {
@@ -127,6 +132,7 @@ export default function ContentfulRoute(props) {
     preview,
     spaceName,
     environment,
+    parentPassword,
   } = props;
 
   const queries = [];
@@ -158,6 +164,7 @@ export default function ContentfulRoute(props) {
                 spaceName={spaceName}
                 environment={environment}
                 url={url}
+                parentPassword={parentPassword}
               />
             )}
           />
@@ -177,6 +184,7 @@ ContentfulRoute.defaultProps = {
   preview: false,
   spaceName: null,
   environment: null,
+  parentPassword: null,
 };
 
 ContentfulRoute.propTypes = {
@@ -188,4 +196,5 @@ ContentfulRoute.propTypes = {
   preview: PT.bool,
   spaceName: PT.string,
   environment: PT.string,
+  parentPassword: PT.string,
 };
