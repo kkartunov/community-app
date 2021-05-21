@@ -231,6 +231,8 @@ async function onExpressJsSetup(server) {
   server.use(`${swScope}/manifest.json`, (req, res) => {
     res.sendFile(`${url}/manifest.json`);
   });
+  // set port
+  server.set('port', process.env.PORT);
 }
 
 global.KEEP_BUILD_INFO = true;
