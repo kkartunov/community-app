@@ -62,7 +62,7 @@ function Routes({ communityId }) {
           render={() => (
             <ContentfulRoute
               baseUrl="/"
-              id="3vWoxVe5lN4BUvoh5xUvu3"
+              id="23EDizH7mjBlzIDSARL04e"
             />
           )}
           path="/"
